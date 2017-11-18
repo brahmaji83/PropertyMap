@@ -1,0 +1,71 @@
+<!-- 
+Lightning Component Name : PropertyGeoAutoCompleteForm 
+Version                  : 1.0 
+Created Date             : 14 November 2017
+Function                 : To get the auto suggestions based on user input in location search
+Owner                    : Brahmaji Tammana
+ -->
+<aura:component description="GoogleMapsAutocomplete" implements="flexipage:availableForAllPageTypes"
+                controller="GoogleMapsController">
+
+    <aura:attribute name="selectedOption" type="String"/>
+    <aura:attribute name="filteredOptions" type="String[]"/>
+    <aura:attribute name="searchKey" type="String"/>
+    <aura:attribute name="placeholder" type="String" default="Enter a location"/>
+
+    <aura:attribute name="defaultAddress" type="String" description="To default property address"/>
+    
+    <!-- Register an event to send the geo code of selected item -->
+    <aura:registerEvent name="AutoCompleteGeoCode" type="c:AutoCompleteGeoCode"/>
+    
+    <div class="slds-form-element">
+        <div class="slds-form-element__control">
+            <div class="slds-combobox_container slds-has-inline-listbox">
+                <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-combobox-lookup"
+                     aria-expanded="false"
+                     aria-haspopup="listbox"
+                     role="combobox"
+                     aura:id="searchLookup">
+                    <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_left"
+                         aura:id="iconDirection">
+                        
+                        <ui:inputText updateOn="keyup"                                      
+                                      keyup="{!c.keyPressController}"
+                                      class="slds-input slds-combobox__input"
+                                      value="{!v.searchKey}"
+                                      placeholder="{!v.placeholder}"/>
+                        <aura:if isTrue="{! !empty(v.selectedOption)}">
+                            <lightning:button class="slds-button slds-button_icon slds-input__icon slds-input__icon_right" variant="label-hidden" onclick="{! c.clear }" iconName="utility:close" />
+                        </aura:if>
+                    </div>
+                    
+                    <!-- Dropdown of auto suggestions -->
+                    <div id="listbox-unique-id" role="listbox">
+                        <ul class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid"
+                            role="presentation">
+                            
+                            <aura:iteration items="{!v.filteredOptions}" var="option">
+                                <li role="presentation"
+                                    class="slds-listbox__item"
+                                    onclick="{!c.selectOption}"
+                                    data-value="{!option.value}"
+                                    data-record="{!option.label}"
+                                    data-placeid="{!option.placeid}">
+                                    <span id="listbox-option-unique-id-01"
+                                          class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta"
+                                          role="option">
+                                        <span class="slds-media__body">
+                                            <span class="slds-listbox__option-text slds-listbox__option-text_entity">{!option.label}</span>
+                                        </span>
+                                    </span>
+                                </li>
+                            </aura:iteration>
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</aura:component>

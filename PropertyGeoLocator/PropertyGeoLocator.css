@@ -1,0 +1,13 @@
+.THIS {
+    position:absolute;
+    height: 50%;
+    width: 88%;
+}
+
+.THIS .geomap {
+    height: 90%;
+}
+
+.THIS .form{
+    height: 14%;
+}

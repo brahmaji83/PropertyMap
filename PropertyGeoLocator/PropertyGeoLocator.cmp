@@ -1,0 +1,45 @@
+<!-- 
+Lightning Component Name : PropertyGeoLocation 
+Version                  : 1.0 
+Created Date             : 14 November 2017
+Function                 : This is a locator component which has all other components. This is used in Quick action of Property record
+Owner                    : Brahmaji Tammana
+ -->
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,force:lightningQuickActionWithoutHeader,force:hasRecordId">
+    
+    <aura:attribute name="record" type="Object"/>
+    <aura:attribute name="simpleRecord" type="Object"/>
+    <aura:attribute name="recordError" type="String"/>
+
+    <div>
+        <div class="slds-page-header" role="banner">
+            <p class="slds-text-heading--label">Geo Location 
+            	<lightning:icon iconName="utility:checkin" size="x-small" alternativeText="Geo Location"/>            
+            </p>            
+        </div>        
+        
+        <!-- To show auto suggestions of user input -->
+        <div class="form">
+            <c:PropertyGeoAutoCompleteForm />
+        </div>
+        
+        <!-- To show the location on map with marker -->
+        <div class="geomap">
+            <c:PropertyGeoMap recordId="{!v.recordId}" />
+        </div>
+        
+        <!-- To add the geo code to property -->
+        <div>
+            <c:PropertyGeoSelection recordId="{!v.recordId}"/>
+        </div>
+    </div>
+
+    <force:recordData aura:id="recordLoader"
+      recordId="{!v.recordId}"
+      layoutType="FULL"
+      targetRecord="{!v.record}"
+      targetFields="{!v.simpleRecord}"
+      targetError="{!v.recordError}"      
+      />
+
+</aura:component>

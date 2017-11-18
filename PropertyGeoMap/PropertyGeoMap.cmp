@@ -1,0 +1,54 @@
+<!-- 
+Lightning Component Name : PropertyGeoMap 
+Version        			 : 1.0 
+Created Date			 : 14 November 2017
+Function        		 : To display the map based on current location
+Owner                    : Brahmaji Tammana
+-->
+<aura:component controller="GoogleMapsController">
+
+  <aura:attribute name="map" type="Object"/>
+  <aura:attribute name="propObject" type="Property__c" />
+
+  <!-- Lightnig Data Service Attributes -->
+  <aura:attribute name="record" type="Object"/>
+  <aura:attribute name="simpleRecord" type="Object"/>
+  <aura:attribute name="recordError" type="String"/>
+
+  <aura:attribute name="recordId" type="String" />
+  <aura:attribute name="showMap" type="Boolean" default="true"/>
+
+
+  <!-- Handler of AutoCompleteGeoCode which is fired from PropertyGeoAutoCompleteForm -->
+  <aura:handler event="c:AutoCompleteGeoCode" action="{!c.handleGeoCode}"/>
+
+
+  <!-- Load leaflet JS library -->
+  <ltng:require styles="/resource/leaflet/leaflet.css"
+    scripts="/resource/leaflet/leaflet.js"
+    afterScriptsLoaded="{!c.jsLoaded}" />
+
+    <!-- Map placeholder     -->
+   <!--  <aura:if isTrue="{! v.showMap}" >
+      <div id="map" class="slds-hide"></div>
+      <aura:set attribute="else">
+        We couldn't locate the property on the map due to the geo codes being missing. Please enter the address of the property to see it on the map and retrieve the geo codes.  
+      </aura:set>
+    </aura:if> -->
+
+    <div aura:id="mapAura" id="map" class="" ></div>
+<!--     <div aura:id="noLocation" class="">
+      We couldn't locate the property on the map due to the geo codes being missing. Please enter the address of the property to see it on the map and retrieve the geo codes.   
+    </div> -->
+     
+
+    <force:recordData aura:id="recordLoader"
+      recordId="{!v.recordId}"
+      layoutType="FULL"
+      targetRecord="{!v.record}"
+      targetFields="{!v.simpleRecord}"
+      targetError="{!v.recordError}"      
+      />
+
+
+    </aura:component>
